@@ -1,0 +1,17 @@
+# Virtual environment
+friday_env/
+
+# Model files (too large for GitHub)
+*.bin
+*.onnx
+*.gguf
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Audio files
+*.wav
+
+# OS files
+.DS_Store
