@@ -1,0 +1,58 @@
+import sounddevice as sd
+import numpy as np
+import subprocess
+import wave
+import time
+import requests
+import json
+import piper
+
+# Config
+SAMPLE_RATE = 16000
+DURATION = 5  # seconds to listen
+WHISPER_BIN = "./whisper.cpp/build/bin/whisper-cli"
+WHISPER_MODEL = "./whisper.cpp/models/ggml-base.bin"
+
+print("\n🎤 FRIDAY is listening... (speak now)")
+
+# 1. Record from mic
+audio = sd.rec(int(DURATION * SAMPLE_RATE), samplerate=SAMPLE_RATE, channels=1, dtype='int16')
+sd.wait()
+
+# Save to WAV
+wav_path = "voice_input.wav"
+with wave.open(wav_path, "wb") as wf:
+    wf.setnchannels(1)
+    wf.setsampwidth(2)
+    wf.setframerate(SAMPLE_RATE)
+    wf.writeframes(audio.tobytes())
+
+print("📝 Transcribing...")
+
+# 2. Transcribe with Whisper
+result = subprocess.run(
+    [WHISPER_BIN, "-m", WHISPER_MODEL, "-f", wav_path, "--language", "en", "--no-timestamps"],
+    capture_output=True, text=True
+)
+transcript = result.stdout.strip()
+print(f"🗣️ You said: {transcript}")
+
+# 3. Send to LLM
+print("🧠 Thinking...")
+resp = requests.post("http://localhost:11434/api/generate",
+    json={"model": "mistral:7b-instruct", "prompt": transcript, "stream": False})
+response = json.loads(resp.text)["response"].strip()
+print(f"🤖 FRIDAY: {response}")
+
+# 4. Speak response
+voice = piper.PiperVoice.load("voices/en_US-hfc_female-medium.onnx")
+audio_out = b""
+for chunk in voice.synthesize(response):
+    audio_out += chunk.audio_int16_bytes
+with wave.open("voice_response.wav", "wb") as wf:
+    wf.setnchannels(chunk.sample_channels)
+    wf.setsampwidth(chunk.sample_width)
+    wf.setframerate(chunk.sample_rate)
+    wf.writeframes(audio_out)
+subprocess.call(["afplay", "voice_response.wav"])
+print("\n✅ Done!")
