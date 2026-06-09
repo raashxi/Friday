@@ -1,10 +1,19 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import subprocess, json, requests, wave, os, time
 import piper
 from memory import FridayMemory
 
 app = FastAPI(title="FRIDAY API", version="1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 memory = FridayMemory()
 
 VOICE_PATH = os.path.expanduser("~/friday_phase0/voices/en_US-hfc_female-medium.onnx")
@@ -105,3 +114,26 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
 
+
+@app.get("/brief")
+def morning_brief_get():
+    return morning_brief()
+
+@app.get("/ask")
+def ask_get(question: str = "Hello"):
+    return ask(AskRequest(question=question))
+from fastapi.responses import FileResponse
+
+@app.post("/speak/file")
+def speak_file(req: SpeakRequest):
+    voice = piper.PiperVoice.load(VOICE_PATH)
+    audio = b""
+    for chunk in voice.synthesize(req.text):
+        audio += chunk.audio_int16_bytes
+    path = "/tmp/friday_api_speak.wav"
+    with wave.open(path, "wb") as wf:
+        wf.setnchannels(chunk.sample_channels)
+        wf.setsampwidth(chunk.sample_width)
+        wf.setframerate(chunk.sample_rate)
+        wf.writeframes(audio)
+    return FileResponse(path, media_type="audio/wav", filename="friday_response.wav")
