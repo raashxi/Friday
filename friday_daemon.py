@@ -60,7 +60,7 @@ def process_command():
         capture_output=True, text=True
     )
     transcript = result.stdout.strip()
-    print(f"\n🗣️ Daddy: {transcript}")
+    print(f"\n🗣️ Sir: {transcript}")
     
     if not transcript or transcript in ["[Music]", ".", ""]:
         is_listening = False
@@ -69,12 +69,12 @@ def process_command():
     ensure_ollama()
     
     context = memory.context_summary()
-    prompt = f"""You are FRIDAY. Call your user "Daddy". His real name is Rashid. Be warm, concise, helpful. Max 2 sentences.
+    prompt = f"""You are FRIDAY. Call your user "Sir". His real name is Rashid. Be warm, concise, helpful. Max 2 sentences.
 
 Previous context:
 {context}
 
-Daddy: {transcript}
+Sir: {transcript}
 FRIDAY:"""
     
     resp = requests.post("http://localhost:11434/api/generate",

@@ -51,7 +51,7 @@ def ask(req: AskRequest):
 Previous context:
 {context}
 
-Daddy: {req.question}
+Sir: {req.question}
 FRIDAY:"""
     response = ask_mistral(prompt)
     memory.remember(req.question, response)
@@ -96,7 +96,7 @@ def morning_brief():
     except:
         news = "News unavailable."
     
-    prompt = f"""Generate a friendly morning briefing. Start with "Good morning, Daddy."
+    prompt = f"""Generate a friendly morning briefing. Start with "Good morning, Sir."
 Calendar: {cal}
 News: {news}
 Keep it under 30 seconds spoken."""
