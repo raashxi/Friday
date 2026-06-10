@@ -5,7 +5,7 @@ import wave
 import time
 import requests
 import json
-import piper
+from friday_tts import speak as tts_speak
 
 # Config
 SAMPLE_RATE = 16000

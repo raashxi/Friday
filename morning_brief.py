@@ -1,5 +1,5 @@
 import requests, json, subprocess, time, wave, feedparser
-import piper
+from friday_tts import speak as tts_speak
 from EventKit import EKEventStore
 from datetime import datetime, timedelta
 

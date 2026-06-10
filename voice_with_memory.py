@@ -4,7 +4,7 @@ import subprocess
 import wave
 import requests
 import json
-import piper
+from friday_tts import speak as tts_speak
 from memory import FridayMemory
 
 SAMPLE_RATE = 16000

@@ -1,5 +1,5 @@
 import requests, json, subprocess, time, wave
-import piper
+from friday_tts import speak as tts_speak
 
 # 1. Use a sample text as input (we'll swap in live STT later)
 user_input = "Tell me a one-sentence productivity tip for today."

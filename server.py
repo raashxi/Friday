@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import subprocess, json, requests, wave, os, time
-import piper
+from friday_tts import speak as tts_speak
 from memory import FridayMemory
 
 app = FastAPI(title="FRIDAY API", version="1.0")
@@ -16,9 +16,9 @@ app.add_middleware(
 )
 memory = FridayMemory()
 
-VOICE_PATH = os.path.expanduser("~/friday_phase0/voices/en_US-hfc_female-medium.onnx")
-WHISPER_BIN = os.path.expanduser("~/friday_phase0/whisper.cpp/build/bin/whisper-cli")
-WHISPER_MODEL = os.path.expanduser("~/friday_phase0/whisper.cpp/models/ggml-small.bin")
+
+
+
 
 class AskRequest(BaseModel):
     question: str
@@ -59,7 +59,8 @@ FRIDAY:"""
 
 @app.post("/speak")
 def speak(req: SpeakRequest):
-    voice = piper.PiperVoice.load(VOICE_PATH)
+    tts_speak(req.text)
+    return {"spoken": req.text}
     audio = b""
     for chunk in voice.synthesize(req.text):
         audio += chunk.audio_int16_bytes
@@ -126,7 +127,8 @@ from fastapi.responses import FileResponse
 
 @app.post("/speak/file")
 def speak_file(req: SpeakRequest):
-    voice = piper.PiperVoice.load(VOICE_PATH)
+    tts_speak(req.text)
+    return {"spoken": req.text}
     audio = b""
     for chunk in voice.synthesize(req.text):
         audio += chunk.audio_int16_bytes

@@ -4,7 +4,7 @@ import subprocess
 import wave
 import requests
 import json
-import piper
+from friday_tts import speak as tts_speak
 from memory import FridayMemory
 from pynput import keyboard
 import threading
@@ -16,7 +16,7 @@ SAMPLE_RATE = 16000
 DURATION = 5
 WHISPER_BIN = f"{HOME}/friday_phase0/whisper.cpp/build/bin/whisper-cli"
 WHISPER_MODEL = f"{HOME}/friday_phase0/whisper.cpp/models/ggml-small.bin"
-VOICE_PATH = f"{HOME}/friday_phase0/voices/en_US-hfc_female-medium.onnx"
+
 
 memory = FridayMemory()
 is_listening = False
@@ -34,17 +34,7 @@ def ensure_ollama():
 
 def speak(text):
     def _speak():
-        voice = piper.PiperVoice.load(VOICE_PATH)
-        audio = b""
-        for chunk in voice.synthesize(text):
-            audio += chunk.audio_int16_bytes
-        path = "/tmp/friday_response.wav"
-        with wave.open(path, "wb") as wf:
-            wf.setnchannels(chunk.sample_channels)
-            wf.setsampwidth(chunk.sample_width)
-            wf.setframerate(chunk.sample_rate)
-            wf.writeframes(audio)
-        subprocess.call(["afplay", path])
+        tts_speak(text)
     threading.Thread(target=_speak).start()
 
 def process_command():
