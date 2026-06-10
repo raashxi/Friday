@@ -34,7 +34,7 @@
 
 ## ◈ What is FRIDAY?
 
-FRIDAY is a **fully local, privacy-first AI assistant** that runs entirely on your machine — no API keys, no subscriptions, no data leaving your device. Ever. Speak a command and watch a complete intelligence pipeline activate: your voice is transcribed by Whisper, processed by a locally-running Mistral-7B, spoken back in a hand-cloned JARVIS voice via Coqui TTS, and stored in a persistent ChromaDB memory layer — all while a cinematic React dashboard renders everything in real time. Automate your morning brief, manage your calendar, push Slack summaries, and organize files through a single unified interface. This is what happens when you decide the cloud was never necessary.
+FRIDAY is a **fully local, privacy first AI assistant** that runs entirely on your machine no API keys, no subscriptions, no data leaving your device. Ever. Speak a command and watch a complete intelligence pipeline activate: your voice is transcribed by Whisper, processed by a locally-running Mistral-7B, spoken back in a hand cloned JARVIS voice via Coqui TTS, and stored in a persistent ChromaDB memory layer all while a cinematic React dashboard renders everything in real time. Automate your morning brief, manage your calendar, push Slack summaries, and organize files through a single unified interface. This is what happens when you decide the cloud was never necessary.
 
 > **No API keys. No subscriptions. No surveillance. Just raw, local intelligence.**
 
@@ -44,7 +44,7 @@ FRIDAY is a **fully local, privacy-first AI assistant** that runs entirely on yo
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════════╗
-║                         F R I D A Y  —  LOCAL AI PIPELINE                      ║
+║                         F R I D A Y LOCAL AI PIPELINE                      ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                  ║
 ║   🎙  VOICE INPUT                                                                ║
@@ -97,12 +97,12 @@ FRIDAY is a **fully local, privacy-first AI assistant** that runs entirely on yo
 
 ## ◈ Features
 
-- 🎙 **Wake-word voice interaction** — Whisper.cpp on the Neural Engine; speaks back in a hand-cloned JARVIS voice. Real two-way conversation, no internet required.
-- 🧠 **On-device LLM** — Mistral-7B-Instruct running through Ollama at **19.75 tokens/second** on Apple M2. No OpenAI. No Anthropic. No bill.
+- 🎙 **Wake-word voice interaction** - Whisper.cpp on the Neural Engine; speaks back in a hand cloned JARVIS voice. Real two way conversation, no internet required.
+- 🧠 **On-device LLM** Mistral-7B-Instruct running through Ollama at **19.75 tokens/second** on Apple M2. No OpenAI. No Anthropic. No bill.
 - 🗣 **Natural JARVIS voice** — Coqui TTS fine-tuned on VCTK speaker 6097. Smooth, measured, cinematic. The voice you've always wanted your computer to have.
-- 🖥 **Stark Dashboard** — Full-screen holographic UI built with **React + Vite + Framer Motion**. Arc reactor animation. Rotating 3D wireframe sphere. Real-time system metrics. Particle field background. Glassmorphism panels.
-- 💾 **Persistent memory** — ChromaDB vector database. FRIDAY remembers what you've discussed, recalls relevant context automatically, and builds a long-term picture of your world.
-- ⚡ **Task automation engine** — File organization, email triage, notification dispatch. Describe a task in plain English and watch it execute.
+- 🖥 **Stark Dashboard** — Full screen holographic UI built with **React + Vite + Framer Motion**. Arc reactor animation. Rotating 3D wireframe sphere. Real-time system metrics. Particle field background. Glassmorphism panels.
+- 💾 **Persistent memory** ChromaDB vector database. FRIDAY remembers what you've discussed, recalls relevant context automatically, and builds a long-term picture of your world.
+- ⚡ **Task automation engine** - File organization, email triage, notification dispatch. Describe a task in plain English and watch it execute.
 - 🌅 **Morning brief agent** — Every morning: live news via RSS + calendar events + weather → Mistral-7B synthesis → spoken brief via JARVIS TTS + pushed to Slack. One pipeline, zero manual effort.
 - 🐳 **Docker deployment** — Fully containerized. Reproducible. Portable. Run FRIDAY on any machine in under five minutes.
 - 🍎 **macOS LaunchAgent** — FRIDAY starts silently at login. Always on. Always listening. You never have to think about starting it.
@@ -117,9 +117,9 @@ FRIDAY is a **fully local, privacy-first AI assistant** that runs entirely on yo
 ```
 friday/
 │
-├── 🚀  wake_friday.sh          # Master launcher — one command to rule them all
-├── 🤖  friday_daemon.py        # Core daemon loop — wake word, STT, LLM, TTS
-├── ⚙️  server.py               # FastAPI server — /ask, /brief, /memory, /status
+├── 🚀  wake_friday.sh          # Master launcher - one command to rule them all
+├── 🤖  friday_daemon.py        # Core daemon loop - wake word, STT, LLM, TTS
+├── ⚙️  server.py               # FastAPI server - /ask, /brief, /memory, /status
 ├── 🗣  friday_tts.py           # Coqui TTS engine — JARVIS voice synthesis
 ├── 💾  memory.py               # ChromaDB interface — store, recall, semantics
 ├── 🌅  morning_brief.py        # Brief agent — RSS + calendar → LLM → speech + Slack
@@ -128,13 +128,13 @@ friday/
 ├── 🔗  full_pipeline.py        # End-to-end integration test runner
 ├── 🎙  voice_with_memory.py    # Voice loop with persistent ChromaDB memory
 │
-├── 🐳  Dockerfile              # Container definition — reproducible anywhere
+├── 🐳  Dockerfile              # Container definition reproducible anywhere
 ├── 📦  docker-compose.yml      # Multi-service orchestration
-├── 🍎  com.friday.assistant.plist  # macOS LaunchAgent — boot persistence
+├── 🍎  com.friday.assistant.plist  # macOS LaunchAgent boot persistence
 │
 ├── 🖥  dashboard/              # React + Vite + Framer Motion frontend
 │   ├── src/
-│   │   ├── App.jsx             # Main layout — three-panel Stark interface
+│   │   ├── App.jsx             # Main layout three-panel Stark interface
 │   │   ├── components/
 │   │   │   ├── ArcReactor.jsx          # Canvas arc reactor animation
 │   │   │   ├── ParticleField.jsx       # Floating particle background
@@ -207,20 +207,20 @@ Good morning, Sir. All systems are operational. How can I assist you today?
 
 The system breathes. The foundation is solid. What comes next will make Phase 5 look like a warm-up.
 
-### Phase 6 — Autonomous Agents *(In Development)*
+### Phase 6 - Autonomous Agents *(In Development)*
 > *"Sir, I've already handled it."*
 
-FRIDAY stops waiting to be asked. A multi-agent framework — one coordinator, multiple specialized sub-agents — running in parallel. FRIDAY monitors your email, calendar, and Slack in the background, surfaces what matters, and executes routine tasks without prompting. ReAct-pattern reasoning chains. Tool-use loops that self-correct. The shift from assistant to autonomous partner.
+FRIDAY stops waiting to be asked. A multi agent framework one coordinator, multiple specialized sub-agents running in parallel. FRIDAY monitors your email, calendar, and Slack in the background, surfaces what matters, and executes routine tasks without prompting. ReAct pattern reasoning chains. Tool use loops that self correct. The shift from assistant to autonomous partner.
 
-### Phase 7 — True JARVIS *(On the Horizon)*
+### Phase 7 - True JARVIS *(On the Horizon)*
 > *"Shall I render the holographic display, Sir?"*
 
-XTTS v2 for zero-shot voice cloning with emotional range that matches the scene. A complete dashboard overhaul: true 3D holographic UI built in Three.js and WebGL, with real-time room-scale projections via the browser's WebXR API. FRIDAY speaks with nuance — urgent when threat levels rise, measured when briefing, warm when it's just the two of you. This is where the movie begins.
+XTTS v2 for zero shot voice cloning with emotional range that matches the scene. A complete dashboard overhaul: true 3D holographic UI built in Three.js and WebGL, with real time room scale projections via the browser's WebXR API. FRIDAY speaks with nuance urgent when threat levels rise, measured when briefing, warm when it's just the two of you. This is where the movie begins.
 
-### Phase 8 — Iron Man Suite *(The Endgame)*
+### Phase 8 - Iron Man Suite *(The Endgame)*
 > *"Repulsor systems at 400%. Ready when you are."*
 
-Computer vision module via CLIP and YOLOv8 — FRIDAY sees your screen, your camera feed, your environment, and reasons about it. IoT integration bridges the digital and physical: smart home, wearables, environmental sensors feeding a live situational awareness layer. The suit is the interface. The world is the display. Phase 8 is not a software update. It's a lifestyle.
+Computer vision module via CLIP and YOLOv8 FRIDAY sees your screen, your camera feed, your environment, and reasons about it. IoT integration bridges the digital and physical: smart home, wearables, environmental sensors feeding a live situational awareness layer. The suit is the interface. The world is the display. Phase 8 is not a software update. It's a lifestyle.
 
 ---
 
@@ -235,7 +235,7 @@ Computer vision module via CLIP and YOLOv8 — FRIDAY sees your screen, your cam
 ║   Digital Assistant Youth                    ║
 ║                                               ║
 ║   Phase 5 of ∞                               ║
-║   Ludhiana → The World                       ║
+║                     ║
 ╚═══════════════════════════════════════════════╝
 ```
 
@@ -243,7 +243,7 @@ Computer vision module via CLIP and YOLOv8 — FRIDAY sees your screen, your cam
 
 Built with ❤️ by **Rashid**
 
-*One step closer to the movies every day.*
+*One step closer to flying every day...*
 
 <br/>
 
