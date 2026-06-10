@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan: #00d4ff;
+  --cyan-dim: #00a8cc;
+  --cyan-dark: #006b85;
+  --cyan-glow: rgba(0, 212, 255, 0.25);
+  --green: #00ff88;
+  --orange: #ff6600;
+  --red: #ff3366;
+  --bg: #020a0f;
+  --bg2: #030d14;
+  --panel: rgba(0, 18, 32, 0.75);
+  --panel2: rgba(0, 25, 45, 0.5);
+  --border: rgba(0, 212, 255, 0.14);
+  --border-bright: rgba(0, 212, 255, 0.35);
+  --text: rgba(200, 240, 255, 0.92);
+  --text2: rgba(140, 195, 218, 0.75);
+  --text3: rgba(80, 140, 165, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.025) 2px,
+    rgba(0, 0, 0, 0.025) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Moving scanline */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(
+    transparent,
+    rgba(0, 212, 255, 0.015),
+    transparent
+  );
+  animation: scanline 10s linear infinite;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-60px); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--cyan-dark); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan-dim); }
+
+/* Glow utilities */
+.glow-cyan { text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+.glow-green { text-shadow: 0 0 15px rgba(0, 255, 136, 0.7); }
+.box-glow { box-shadow: 0 0 20px rgba(0, 212, 255, 0.12), inset 0 0 20px rgba(0, 212, 255, 0.03); }
+.box-glow-bright { box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.08); }
+
+/* Panel glass */
+.glass-panel {
+  background: var(--panel);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--border);
+}
+
+.glass-panel-bright {
+  background: var(--panel2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-bright);
+}
+
+/* Top gradient bar on panels */
+.panel-top-glow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.6;
+}
+
+/* Cursor blink */
+.cursor-blink {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--cyan);
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Button base */
+.holo-btn {
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text2);
+  background: rgba(0, 212, 255, 0.04);
+  border: 1px solid var(--border-bright);
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.holo-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.holo-btn:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), inset 0 0 15px rgba(0, 212, 255, 0.05);
+}
+
+.holo-btn:hover::before { opacity: 1; }
+
+.holo-btn:active { transform: scale(0.97); }
+
+.holo-btn.primary {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: rgba(0, 212, 255, 0.08);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+}
+
+.holo-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Section label */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--cyan-dim);
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+/* Input */
+.holo-input {
+  width: 100%;
+  background: rgba(0, 10, 20, 0.9);
+  border: 1px solid var(--border-bright);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 11px 14px 11px 34px;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.holo-input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), inset 0 0 10px rgba(0, 212, 255, 0.04);
+}
+
+.holo-input::placeholder {
+  color: var(--text3);
+}
+
+/* Metric bar */
+.metric-bar-track {
+  height: 3px;
+  background: rgba(0, 212, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--cyan-dark), var(--cyan));
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.6);
+  position: relative;
+  transition: width 0.8s ease;
+}
+
+.metric-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(20px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(-100px); opacity: 0; }
+}
+
+/* Corner decorations */
+.corner-tl::before,
+.corner-tl::after,
+.corner-br::before,
+.corner-br::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--cyan);
+  border-style: solid;
+}
+
+.corner-tl::before {
+  top: -1px; left: -1px;
+  border-width: 1px 0 0 1px;
+}
+.corner-tl::after {
+  bottom: -1px; right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Flicker animation */
+.flicker { animation: flicker 6s ease-in-out infinite; }
+
+@keyframes flicker {
+  0%, 89%, 91%, 93%, 95%, 100% { opacity: 1; }
+  90% { opacity: 0.85; }
+  92% { opacity: 0.95; }
+  94% { opacity: 0.88; }
+}
+
+/* Status badge */
+.status-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
